@@ -1,12 +1,14 @@
 import axios from "axios";
+import apiConfig from "./apiConfig";
 import queryString from "query-string";
+
 const axiosClient = axios.create({
-  baseURL: process.env.REACT_APP_BOOKAPI_URL,
+  baseURL: apiConfig.bareUrl,
   headers: {
     "content-type": "application/json",
-    //"x-api-key": "AIzaSyB_Xn9cu0nCA15oMjuS83ciVvSHPYmYUVg",
   },
-  paramsSerializer: (params) => queryString.stringify(params),
+  paramsSerializer: (params) =>
+    queryString.stringify({ ...params, api_key: apiConfig.apiKey }),
 });
 
 axiosClient.interceptors.request.use(async (config) => {
