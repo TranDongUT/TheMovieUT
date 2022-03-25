@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-import bookApi from "./api/bookApi";
+import bookApi from "./api/tmdbApi";
 
 function App() {
   useEffect(() => {}, []);
