@@ -88,10 +88,12 @@ function Header() {
             <i onClick={handleSearch} className="bx bx-search"></i>
           </form>
           <div className="avatar">
-            <img
-              src="https://images.unsplash.com/photo-1644982647531-daff2c7383f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60"
-              alt=""
-            />
+            <Link to="/sign-in">
+              <img
+                src="https://images.unsplash.com/photo-1644982647531-daff2c7383f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60"
+                alt=""
+              />
+            </Link>
           </div>
         </div>
       </div>
