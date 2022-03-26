@@ -1,4 +1,3 @@
-import axios from "axios";
 import axiosClient from "./axiosClient";
 
 export const category = {
@@ -8,19 +7,19 @@ export const category = {
 
 export const movieType = {
   upcoming: "upcoming",
-  poppular: "popular",
+  popular: "popular",
   top_rated: "top_rated",
 };
 
 export const tvType = {
-  poppular: "popular",
+  popular: "popular",
   top_rated: "top_rated",
   on_the_air: "on_the_air",
 };
 
 const tmdbApi = {
   getMovieList: (type, params) => {
-    const url = "movie" + movieType[type];
+    const url = "movie/" + movieType[type];
     return axiosClient.get(url, params);
   },
   getTvList: (type, params) => {
