@@ -9,7 +9,7 @@ const headerNav = [
   },
   {
     display: "Movies",
-    path: "/movies",
+    path: "/movie",
     icon: <i className="bx bxs-movie-play"></i>,
   },
   {

@@ -1,16 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "features/movie/pages/Home/Home";
-import Movies from "features/movie/pages/Movies/Movies";
-import TV from "features/movie/pages/TV/TV";
 import SignIn from "features/Auth/pages/SignIn";
+import Home from "features/movie/pages/Home";
+import Catalog from "features/movie/pages/Catalog";
 function MRoutes() {
   return (
     <div>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/tv" element={<TV />} />
+        <Route  path="/:category" element={<Catalog />} />
         <Route path="/sign-in" element={<SignIn />} />
       </Routes>
     </div>
