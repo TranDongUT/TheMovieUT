@@ -25,6 +25,7 @@ const headerNav = [
 ];
 function Header() {
   const { pathname } = useLocation();
+
   const headerRef = useRef(null);
   const inputRef = useRef();
   const [activeSearch, setActiveSearch] = useState(false);
@@ -61,7 +62,9 @@ function Header() {
     <div ref={headerRef} className="header">
       <div className="container">
         <ul className="header-nav">
-          <Link className="logo text-link" to="/">TheMovieUT</Link>
+          <Link className="logo text-link" to="/">
+            TheMovieUT
+          </Link>
           {headerNav.map((e, i) => (
             <li key={i} className={`${i === active ? "active" : ""}`}>
               <Link className="text-link" to={e.path}>
