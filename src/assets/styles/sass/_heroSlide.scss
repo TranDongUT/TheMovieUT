@@ -21,6 +21,7 @@
     & .item{
         &-details{
             z-index: 2;
+            animation: anime .3s linear;
         }
         &-title{
             max-width: 450px;
@@ -48,6 +49,7 @@
         }
     }
 }
+
 @media screen and (max-width: 1024px){
     .slide-item{
         min-height: 40vh;
