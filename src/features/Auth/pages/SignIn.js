@@ -31,15 +31,17 @@ function SignIn() {
       .onAuthStateChanged(async (user) => {
         const tokenId = await user.getIdToken();
         console.log(user);
-        dispatch(signIn(tokenId));
+        dispatch(signIn(user));
       });
     return () => unregisterAuthObserver();
   }, []);
 
-  if (!user.isSignIn) {
+  //if not sign-in
+  if (!user.userInfor) {
     return (
       <div className={style.container}>
-        <div>
+        <div className={style.logo}></div>
+        <div className={style.title}>
           <h1>The Movie UT</h1>
           <p>Please sign-in:</p>
         </div>
@@ -51,16 +53,22 @@ function SignIn() {
     );
   }
 
+  const handleSignOut = () => {
+    firebase.auth().signOut();
+    dispatch(signIn(""));
+  };
+
   return (
     <div className={style.container}>
-      <div>
+      <div className={style.logo}></div>
+      <div className={style.title}>
         <h1>The Movie UT</h1>
       </div>
       <p>
         Welcome {firebase.auth().currentUser.displayName}! You are now
         signed-in!
       </p>
-      <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
+      <button onClick={handleSignOut}>Sign-out</button>
     </div>
   );
 }

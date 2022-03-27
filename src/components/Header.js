@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
 const headerNav = [
@@ -58,6 +59,9 @@ function Header() {
     }
   };
 
+  ///user redux
+  const userInfor = useSelector((state) => state.user.userInfor);
+
   return (
     <div ref={headerRef} className="header">
       <div className="container">
@@ -87,12 +91,13 @@ function Header() {
             <input ref={inputRef} type="text" placeholder="Search movie..." />
             <i onClick={handleSearch} className="bx bx-search"></i>
           </form>
-          <div className="avatar">
+          <div className={userInfor ? "avatar-active" : "avatar"}>
             <Link to="/sign-in">
-              <img
-                src="https://images.unsplash.com/photo-1644982647531-daff2c7383f3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60"
-                alt=""
-              />
+              {userInfor ? (
+                <img src={userInfor._delegate.photoURL} alt="" />
+              ) : (
+                <i className="bx bx-user-circle"></i>
+              )}
             </Link>
           </div>
         </div>

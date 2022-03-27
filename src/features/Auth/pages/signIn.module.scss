@@ -6,6 +6,14 @@
   color: #333;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  .logo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50px;
+    background-image: url("../../../assets/images/logo.jpg");
+  }
+  .title {
+    margin-bottom: 20px;
+  }
 }
