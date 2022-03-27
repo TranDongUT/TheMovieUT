@@ -8,7 +8,7 @@ function MRoutes() {
     <div>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route  path="/:category" element={<Catalog />} />
+        <Route path="/:category" element={<Catalog />} />
         <Route path="/sign-in" element={<SignIn />} />
       </Routes>
     </div>
