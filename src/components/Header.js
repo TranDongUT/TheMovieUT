@@ -14,7 +14,7 @@ const headerNav = [
     icon: <i className="bx bxs-movie-play"></i>,
   },
   {
-    display: "TV Series",
+    display: "TV Shows",
     path: "/tv",
     icon: <i className="bx bxs-tv"></i>,
   },
@@ -65,10 +65,10 @@ function Header() {
   return (
     <div ref={headerRef} className="header">
       <div className="container">
+        <Link className="logo text-link" to="/">
+          TheMovieUT
+        </Link>
         <ul className="header-nav">
-          <Link className="logo text-link" to="/">
-            TheMovieUT
-          </Link>
           {headerNav.map((e, i) => (
             <li key={i} className={`${i === active ? "active" : ""}`}>
               <Link className="text-link" to={e.path}>

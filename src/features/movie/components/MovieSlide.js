@@ -21,7 +21,7 @@ function MovieSlide({id, categr, type, title }) {
                 respone = await tmdbApi.getTvList(type, {params})
         }
     }else{
-        respone = await tmdbApi.similar(category, id)
+        respone = await tmdbApi.similar(categr, id)
     }
     setItems(respone.results)
   }
