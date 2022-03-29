@@ -1,8 +1,12 @@
 import React from 'react'
+import MovieList from '../components/MovieList';
 
 function Search() {
+
   return (
-    <div>Search</div>
+    <div className='movie'>
+      <MovieList category="movie" type="search"/>
+    </div>
   )
 }
 

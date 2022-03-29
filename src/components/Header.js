@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const headerNav = [
   {
@@ -30,7 +30,9 @@ function Header() {
   const headerRef = useRef(null);
   const inputRef = useRef();
   const [activeSearch, setActiveSearch] = useState(false);
-
+  const [search, setSearch] = useState("");
+  let navigate = useNavigate(); 
+   
   const active = headerNav.findIndex((e) => e.path === pathname);
 
   useEffect(() => {
@@ -57,6 +59,19 @@ function Header() {
     } else {
       setActiveSearch(false);
     }
+  };
+
+  const gotoSearch = useCallback(() => {
+    if (search.length > 0) {
+      navigate(`/search/${search}`);
+    }
+  }, [navigate, search]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    gotoSearch();
   };
 
   ///user redux
@@ -87,8 +102,16 @@ function Header() {
           ))}
         </ul>
         <div className="header-right">
-          <form className={activeSearch ? "search active" : "search"}>
-            <input ref={inputRef} type="text" placeholder="Search movie..." />
+          <form
+            onSubmit={handleSubmit}
+            className={activeSearch ? "search active" : "search"}
+          >
+            <input
+              ref={inputRef}
+              onInput={(e) => setSearch(e.target.value.trim())}
+              type="text"
+              placeholder="Search movie..."
+            />
             <i onClick={handleSearch} className="bx bx-search"></i>
           </form>
           <div className={userInfor ? "avatar-active" : "avatar"}>

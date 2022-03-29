@@ -70,12 +70,12 @@ h3{
     }
 }
 @media screen and (max-width: 1024px){
-    .background{
-        background-size: auto 40vh;
-        &:after{
-            height: 40vh;
-        }
-    }
+    // .background{
+    //     background-size: auto 40vh;
+    //     &:after{
+    //         height: 40vh;
+    //     }
+    // }
 }
 @media screen and (max-width: 767px){
     .background{

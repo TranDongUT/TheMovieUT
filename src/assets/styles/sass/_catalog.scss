@@ -1,0 +1,26 @@
+.catalog{
+    position: relative;
+}
+.sort{
+    position: absolute;
+    top: 150px;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px 20px;
+    &-item{
+        padding: 5px 20px;
+        border: 1px solid $white-color;
+        border-radius: 20px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: all .3s ease;
+        &.active, &:hover{
+            background: $primary-color;
+        }
+    }
+}

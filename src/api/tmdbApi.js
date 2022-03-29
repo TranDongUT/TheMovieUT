@@ -9,12 +9,14 @@ export const movieType = {
   upcoming: "upcoming",
   popular: "popular",
   top_rated: "top_rated",
+  now_playing: "now_playing",
 };
 
 export const tvType = {
   popular: "popular",
   top_rated: "top_rated",
   on_the_air: "on_the_air",
+  airing_today: "airing_today",
 };
 
 const tmdbApi = {
@@ -46,6 +48,14 @@ const tmdbApi = {
     const url = category[cate] + "/" + id + "/similar";
     return axiosClient.get(url, { params: {} });
   },
+  genre: (cate) => {
+    const url = "genre/" + category[cate] + "/list";
+    return axiosClient.get(url, {params: {}})
+  },
+  filters: (cate, params) => {
+    const url = "/discover/" + cate;
+    return axiosClient.get(url, params)
+  }
 };
 
 export default tmdbApi;

@@ -1,9 +1,8 @@
 import tmdbApi from "api/tmdbApi";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Video(props) {
   const [videoMovie, setVideoMovie] = useState("");
-  const iframeRef = useRef(null);
 
   const fetchVideo = async () => {
     const respone = await tmdbApi.getVideos(props.category, props.item.id);
@@ -35,7 +34,6 @@ function Video(props) {
                 src={`https://www.youtube.com/embed/${videoMovie.key}`}
                 width="100%"
                 title="video"
-                ref={iframeRef}
               ></iframe>
             </div>
           )}
