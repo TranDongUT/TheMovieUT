@@ -27,6 +27,14 @@
         & .btn-trailer{
             margin-top: 10px;
         }
+
+        & .btn-addToFavor{
+            margin-right: 10px;
+            background-color: inherit;
+            &:hover{
+                background-color: #f51333;
+            }
+        }
     }
     &-overview{
         & p{
