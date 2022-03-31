@@ -23,16 +23,15 @@ function Catalog() {
 
   const handleFilterItems = (data) => {
     setFilters(data);
-  }
+  };
 
   useEffect(() => {
     handleFilterItems();
-  }, [filters])
-  
+  }, [filters]);
 
   return (
     <div className="catalog">
-      <Filter filterItems={handleFilterItems} category={category}/>
+      <Filter filterItems={handleFilterItems} category={category} />
 
       <div className="sort">
         {category == "movie" &&
@@ -56,7 +55,7 @@ function Catalog() {
           ))}
       </div>
       <div className="movie movie-list-f">
-        <MovieList category={category} type={sort} filters={filters}/>
+        <MovieList category={category} type={sort} filters={filters} />
       </div>
     </div>
   );

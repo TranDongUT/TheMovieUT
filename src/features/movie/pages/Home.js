@@ -9,13 +9,29 @@ function Home() {
       <HeroSlide />
       <div className="list-section">
         <div className="section container">
-          <MovieSlide categr={category.movie} type={movieType.popular} title={"Trending Movies"} />
+          <MovieSlide
+            categr={category.movie}
+            type={movieType.popular}
+            title={"Trending Movies"}
+          />
 
-          <MovieSlide categr={category.movie} type={movieType.top_rated} title={"Top Rated Movies"} />
+          <MovieSlide
+            categr={category.movie}
+            type={movieType.top_rated}
+            title={"Top Rated Movies"}
+          />
 
-          <MovieSlide categr={category.tv} type={tvType.popular} title={"Trending TV"} />
+          <MovieSlide
+            categr={category.tv}
+            type={tvType.popular}
+            title={"Trending TV"}
+          />
 
-          <MovieSlide categr={category.tv} type={tvType.top_rated} title={"Top Rated TV"} />
+          <MovieSlide
+            categr={category.tv}
+            type={tvType.top_rated}
+            title={"Top Rated TV"}
+          />
         </div>
       </div>
     </>

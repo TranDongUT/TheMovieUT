@@ -2,7 +2,8 @@ import tmdbApi from "api/tmdbApi";
 import React, { useEffect, useState } from "react";
 
 function Filter(props) {
-  const [genres, setGenres] = useState([]);
+  ///{filterItems, category} = props <- from Catalog
+  const [genres, setGenres] = useState([]); ////state: list type movie from api
   const [filterItems, setFilterItems] = useState([]);
   const [activeBtn, setActiveBtn] = useState(false);
 
@@ -16,7 +17,6 @@ function Filter(props) {
     if (filterItems.includes(id)) {
       const index = filterItems.findIndex((i) => i == id);
       filterItems.splice(index, 1);
-
       fetchFilter();
     } else {
       setFilterItems([...filterItems, id]);
