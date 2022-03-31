@@ -50,12 +50,12 @@ const tmdbApi = {
   },
   genre: (cate) => {
     const url = "genre/" + category[cate] + "/list";
-    return axiosClient.get(url, {params: {}})
+    return axiosClient.get(url, { params: {} });
   },
   filters: (cate, params) => {
     const url = "/discover/" + cate;
-    return axiosClient.get(url, params)
-  }
+    return axiosClient.get(url, params);
+  },
 };
 
 export default tmdbApi;

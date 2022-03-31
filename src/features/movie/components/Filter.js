@@ -43,8 +43,11 @@ function Filter(props) {
 
   useEffect(() => {
     fetchFilter();
+  }, []);
+
+  useEffect(() => {
+    //fetchFilter();
     sendData();
-    console.log(filterItems)
   }, [filterItems]);
 
   useEffect(() => {

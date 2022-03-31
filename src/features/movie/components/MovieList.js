@@ -31,15 +31,8 @@ function MovieList(props) {
             respone = await tmdbApi.getTvList(props.type, { params }); ////TV
             break;
           default:
-            break;
+            throw new Error("invalid Type");
         }
-      }
-      /////BUG
-      if (props.filters) {
-        const params = {
-          with_genres: props.filters.toString(),
-        };
-        respone = await tmdbApi.filters(props.category, { params });
       }
     }
 
@@ -47,9 +40,26 @@ function MovieList(props) {
     setItems(respone.results);
   };
 
+  ///default
   useEffect(() => {
     fetchListMovies();
-  }, [props.category, props.type, search, props.filters]);
+  }, [props.category, props.type, search]);
+
+  ///after filter change
+  useEffect(() => {
+    let respone = {};
+    const fetchAfterFilter = async () => {
+      const params = {
+        with_genres: props.filters.toString(),
+      };
+      respone = await tmdbApi.filters(props.category, { params });
+      setBg(respone.results[0].backdrop_path);
+      setItems(respone.results);
+    };
+    if (props.filters) {
+      fetchAfterFilter();
+    }
+  }, [props.filters]);
 
   return (
     <div>

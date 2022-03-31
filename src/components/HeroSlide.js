@@ -11,12 +11,8 @@ function HeroSlide() {
   useEffect(() => {
     const fetch = async () => {
       const params = { page: 1 };
-      try {
-        const respone = await tmdbApi.getMovieList(movieType.popular, {
-          params,
-        });
-        setMovieItems(respone.results.slice(0, 4));
-      } catch {}
+      const respone = await tmdbApi.getMovieList(movieType.popular, { params });
+      setMovieItems(respone.results.slice(0, 4));
     };
 
     fetch();
