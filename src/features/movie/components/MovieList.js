@@ -33,14 +33,13 @@ function MovieList(props) {
           default:
             break;
         }
-
-        /////BUG
-        if (props.filters) {
-          const params = {
-            with_genres: props.filters.toString(),
-          };
-          respone = await tmdbApi.filters(props.category, { params });
-        }
+      }
+      /////BUG
+      if (props.filters) {
+        const params = {
+          with_genres: props.filters.toString(),
+        };
+        respone = await tmdbApi.filters(props.category, { params });
       }
     }
 

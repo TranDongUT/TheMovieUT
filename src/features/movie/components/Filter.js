@@ -10,16 +10,22 @@ function Filter(props) {
   const fetchFilter = async () => {
     const respone = await tmdbApi.genre(props.category);
     setGenres(respone.genres);
-    sendData();
   };
 
+  let newFilters = [];
   const handleClickItem = (id) => {
     if (filterItems.includes(id)) {
       const index = filterItems.findIndex((i) => i == id);
-      filterItems.splice(index, 1);
-      fetchFilter();
+      setFilterItems((prev) => {
+        newFilters = [...prev];
+        newFilters.splice(index, 1);
+        return newFilters;
+      });
     } else {
-      setFilterItems([...filterItems, id]);
+      setFilterItems((prev) => {
+        newFilters = [...prev, id];
+        return newFilters;
+      });
     }
   };
 
@@ -37,6 +43,8 @@ function Filter(props) {
 
   useEffect(() => {
     fetchFilter();
+    sendData();
+    console.log(filterItems)
   }, [filterItems]);
 
   useEffect(() => {
