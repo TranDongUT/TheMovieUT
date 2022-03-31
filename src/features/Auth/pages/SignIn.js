@@ -1,40 +1,44 @@
 import { useEffect } from "react";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
 import style from "./signIn.module.scss";
 import { useSelector, useDispatch } from "react-redux";
-import { signIn } from "../actions/user";
+import { addToFavorite, signIn } from "../actions/user";
+///firebase
+import { config, uiConfig } from "../firebaseConfig";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import firebase from "firebase/compat/app";
+import { getFirestore, getDoc, doc } from "firebase/firestore";
 
-// Configure Firebase.
-const config = {
-  apiKey: "AIzaSyCpIxJHtG0E5vxR-DNWrcTntNIUp_cd_SY",
-  authDomain: "the-movie-ut-7c610.firebaseapp.com",
-};
-firebase.initializeApp(config);
+const app = firebase.initializeApp(config);
+const db = getFirestore(app);
 
-// Configure FirebaseUI.
-const uiConfig = {
-  signInFlow: "popup",
-  signInSuccessUrl: "/sign-in", ///after sigin success
-  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-};
-
+/////////////////////////////////////////////
 function SignIn() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log(user);
 
   useEffect(() => {
-    const unregisterAuthObserver = firebase
+    const unregisterAuthObserver = app
       .auth()
       .onAuthStateChanged(async (user) => {
         const tokenId = await user.getIdToken();
-        console.log(user);
+        ///use Redux
         dispatch(signIn(user));
+        ////About database firebase (favorite of user)
+        ////use id of user to get favorite in FavoriteOfUsers
+        const docRef = doc(db, "FavoriteOfUsers", user.uid);
+        const favorite = await getDoc(docRef);
+        if (favorite.exists()) {
+          const payload = favorite.data().Favorite;
+          dispatch(addToFavorite(payload));
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("Empty data");
+        }
       });
     return () => unregisterAuthObserver();
   }, []);
+
+  console.log(user);
 
   //if not sign-in
   if (!user.userInfor) {
@@ -45,10 +49,7 @@ function SignIn() {
           <h1>The Movie UT</h1>
           <p>Please sign-in:</p>
         </div>
-        <StyledFirebaseAuth
-          uiConfig={uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={app.auth()} />
       </div>
     );
   }
@@ -65,8 +66,7 @@ function SignIn() {
         <h1>The Movie UT</h1>
       </div>
       <p>
-        Welcome {firebase.auth().currentUser.displayName}! You are now
-        signed-in!
+        Welcome {app.auth().currentUser.displayName}! You are now signed-in!
       </p>
       <button onClick={handleSignOut}>Sign-out</button>
     </div>

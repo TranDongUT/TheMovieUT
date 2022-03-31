@@ -1,9 +1,20 @@
 import tmdbApi from "api/tmdbApi";
 import MovieSlide from "features/movie/components/MovieSlide";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CastList from "./CastList";
 import Video from "./Video";
+
+//firebase
+import { config } from "features/Auth/firebaseConfig";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+import firebase from "firebase/compat/app";
+
+const app = firebase.initializeApp(config);
+const db = getFirestore(app);
+
+//////////////////////////////////////////////////////////////////
 
 function Details() {
   const { category, id } = useParams();
@@ -15,7 +26,6 @@ function Details() {
     const params = {};
     const respone = await tmdbApi.detail(category, id, { params });
     setItem(respone);
-    
   };
 
   const time = (t) => {
@@ -33,15 +43,24 @@ function Details() {
   }, [category, id]);
 
   useEffect(() => {
-    if (activeVideo && videoRef.current){
+    if (activeVideo && videoRef.current) {
       videoRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'nearest'
-      })
-      setActiveVideo(false)
+        behavior: "smooth",
+        block: "nearest",
+        inline: "nearest",
+      });
+      setActiveVideo(false);
     }
-  })
+  });
+
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const addToFavorite = async (id) => {
+    const docRef = doc(db, "FavoriteOfUsers", user.userInfor.uid);
+    console.log(user);
+    await setDoc(docRef, { ...user.favoriteList, id });
+  };
 
   return (
     <>
@@ -65,8 +84,14 @@ function Details() {
 
                   <div className="detail-genres">
                     <ul className="detail-date-time">
-                      <li className="detail-date">{item.release_date || item.last_air_date}</li>
-                      <li className="detail-time">{item.runtime ?  time(item.runtime) : `${item.episode_run_time[0]}m`}</li>
+                      <li className="detail-date">
+                        {item.release_date || item.last_air_date}
+                      </li>
+                      <li className="detail-time">
+                        {item.runtime
+                          ? time(item.runtime)
+                          : `${item.episode_run_time[0]}m`}
+                      </li>
                     </ul>
                     <div className="detail-list-genres">
                       {item.genres &&
@@ -84,6 +109,13 @@ function Details() {
                   </div>
 
                   <button
+                    ///handle with Redux
+                    onClick={() => addToFavorite(item.id)}
+                    className="btn btn-addToFavor"
+                  >
+                    Add To Favorite
+                  </button>
+                  <button
                     onClick={() => setActiveVideo(true)}
                     className="btn btn-trailer"
                   >
@@ -99,10 +131,15 @@ function Details() {
             </div>
           </div>
 
-          <Video innerRef={videoRef} category={category} item={item}/>
+          <Video innerRef={videoRef} category={category} item={item} />
 
           <div className="container">
-            <MovieSlide id={item.id} categr={category} type={"similar"} title={"Similar"}/>
+            <MovieSlide
+              id={item.id}
+              categr={category}
+              type={"similar"}
+              title={"Similar"}
+            />
           </div>
         </>
       )}

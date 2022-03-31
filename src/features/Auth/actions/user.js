@@ -4,6 +4,6 @@ export const signIn = (payload) => ({
 });
 
 export const addToFavorite = (payload) => ({
-  type: "ADD_FAVORITE",
+  type: "ADD_TO_FAVORITE",
   payload,
 });
