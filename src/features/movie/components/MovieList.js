@@ -2,11 +2,15 @@ import tmdbApi, { category, movieType, tvType } from "api/tmdbApi";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MovieCard from "./MovieCard";
+import Pagination from "./Pagination";
 
 function MovieList(props) {
   ////{category, filter, type} = props <- from Catalog
   const [items, setItems] = useState([]);
   const [bg, setBg] = useState("");
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const { search } = useParams();
 
@@ -17,12 +21,15 @@ function MovieList(props) {
     if (search) {
       const params = {
         query: search,
+        page: page,
       };
       respone = await tmdbApi.search(props.category, { params });
     } else {
       /////for default TV or Movie
       if (props.type) {
-        const params = {};
+        const params = {
+          page: page,
+        };
         switch (props.category) {
           case category.movie:
             respone = await tmdbApi.getMovieList(props.type, { params }); ////movie
@@ -38,12 +45,14 @@ function MovieList(props) {
 
     setBg(respone.results[0].backdrop_path);
     setItems(respone.results);
+    setTotalPages(respone.total_pages);
   };
+
 
   ///default
   useEffect(() => {
     fetchListMovies();
-  }, [props.category, props.type, search]);
+  }, [props.category, props.type, search, page]);
 
   ///after filter change
   useEffect(() => {
@@ -51,15 +60,26 @@ function MovieList(props) {
     const fetchAfterFilter = async () => {
       const params = {
         with_genres: props.filters.toString(),
+        page: page,
       };
       respone = await tmdbApi.filters(props.category, { params });
       setBg(respone.results[0].backdrop_path);
       setItems(respone.results);
+      setTotalPages(respone.total_pages);
     };
     if (props.filters) {
       fetchAfterFilter();
     }
-  }, [props.filters]);
+  }, [props.filters, page]);
+
+  
+  //pagination
+  const handlePageChange = (newPage) => {
+    setPage(newPage)
+  }
+  useEffect(() => {
+    setPage(1);
+  }, [props.category, props.type, search, props.filters])
 
   return (
     <div>
@@ -78,6 +98,9 @@ function MovieList(props) {
             <MovieCard key={i} item={item} category={props.category} />
           ))}
         </div>
+
+        <Pagination totalPages={totalPages} page={page} onChangePage={handlePageChange}/>
+
       </div>
     </div>
   );
