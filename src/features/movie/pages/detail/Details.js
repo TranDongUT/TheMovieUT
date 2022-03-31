@@ -7,9 +7,9 @@ import CastList from "./CastList";
 import Video from "./Video";
 
 //firebase
-import { config } from "features/Auth/firebaseConfig";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { config } from "../../../../firebase/firebaseConfig";
 import firebase from "firebase/compat/app";
+import { getFirestore, doc, updateDoc, setDoc } from "firebase/firestore";
 
 const app = firebase.initializeApp(config);
 const db = getFirestore(app);
@@ -53,13 +53,24 @@ function Details() {
     }
   });
 
+  ///////////about user favorite
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
+  console.log(user.favoriteList);
   const addToFavorite = async (id) => {
     const docRef = doc(db, "FavoriteOfUsers", user.userInfor.uid);
-    console.log(user);
-    await setDoc(docRef, { ...user.favoriteList, id });
+
+    if (!user.favoriteList) {
+      /////chua co favorite list -> set moi
+      await setDoc(docRef, { favorite: id });
+      dispatch(addToFavorite(id));
+    } else {
+      ////da co favorite -> update
+      console.log("ok");
+      const newList = { ...user.favoriteList, id };
+      dispatch(addToFavorite(newList));
+      await updateDoc(docRef, { favorite: newList });
+    }
   };
 
   return (
