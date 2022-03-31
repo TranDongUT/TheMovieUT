@@ -48,6 +48,10 @@ const tmdbApi = {
     const url = category[cate] + "/" + id + "/similar";
     return axiosClient.get(url, { params: {} });
   },
+  trendings: () =>{
+    const url = "trending/movie/week";
+    return axiosClient.get(url, {params: {}}); 
+  },
   genre: (cate) => {
     const url = "genre/" + category[cate] + "/list";
     return axiosClient.get(url, { params: {} });

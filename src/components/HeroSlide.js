@@ -10,9 +10,10 @@ function HeroSlide() {
 
   useEffect(() => {
     const fetch = async () => {
-      const params = { page: 1 };
-      const respone = await tmdbApi.getMovieList(movieType.popular, { params });
-      setMovieItems(respone.results.slice(0, 4));
+      try {
+        const respone = await tmdbApi.trendings();
+        setMovieItems(respone.results.slice(0, 4));
+      } catch {}
     };
 
     fetch();
