@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-function Pagination({ totalPages, page, onChangePage }) {
+function Pagination(props) {
+  const { totalPages, page, onChangePage } = props;
   const [range, setRange] = useState({
     start: 0,
     end: 10,
@@ -32,6 +33,14 @@ function Pagination({ totalPages, page, onChangePage }) {
       });
     }
   };
+
+  useEffect(() => {
+    setRange({
+      start: 0,
+      end: 10,
+    })
+  }, [props.category, props.type, props.search, props.filters]);
+
 
   return (
     <div className="pagination">

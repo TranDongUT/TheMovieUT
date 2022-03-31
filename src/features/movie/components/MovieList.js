@@ -48,7 +48,6 @@ function MovieList(props) {
     setTotalPages(respone.total_pages);
   };
 
-
   ///default
   useEffect(() => {
     fetchListMovies();
@@ -72,14 +71,13 @@ function MovieList(props) {
     }
   }, [props.filters, page]);
 
-  
   //pagination
   const handlePageChange = (newPage) => {
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
   useEffect(() => {
     setPage(1);
-  }, [props.category, props.type, search, props.filters])
+  }, [props.category, props.type, search, props.filters]);
 
   return (
     <div>
@@ -99,8 +97,15 @@ function MovieList(props) {
           ))}
         </div>
 
-        <Pagination totalPages={totalPages} page={page} onChangePage={handlePageChange}/>
-
+        <Pagination
+          totalPages={totalPages}
+          page={page}
+          onChangePage={handlePageChange}
+          category={props.category}
+          type={props.type}
+          search={search}
+          filters={props.filters}
+        />
       </div>
     </div>
   );
