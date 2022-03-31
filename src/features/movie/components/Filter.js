@@ -14,6 +14,7 @@ function Filter(props) {
 
   let newFilters = [];
   const handleClickItem = (id) => {
+    /////toggle with item in array Filter
     if (filterItems.includes(id)) {
       const index = filterItems.findIndex((i) => i == id);
       setFilterItems((prev) => {
@@ -43,7 +44,7 @@ function Filter(props) {
 
   useEffect(() => {
     fetchFilter();
-  }, []);
+  }, [props.category]);
 
   useEffect(() => {
     //fetchFilter();
