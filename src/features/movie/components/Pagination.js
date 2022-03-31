@@ -14,22 +14,22 @@ function Pagination({ totalPages, page, onChangePage }) {
   const handlePageChange = (newPage) => {
     onChangePage(newPage);
 
-    if (newPage > range.end){
-        setRange((prev) => {
-            return {
-                start: prev.start + 5,
-                end: prev.end + 5,
-            }
-        })
+    if (newPage > range.end) {
+      setRange((prev) => {
+        return {
+          start: prev.start + 5,
+          end: prev.end + 5,
+        };
+      });
     }
-    
-    if (newPage <= range.start){
-        setRange((prev) => {
-            return {
-                start: prev.start - 5,
-                end: prev.end - 5,
-            }
-        })
+
+    if (newPage <= range.start) {
+      setRange((prev) => {
+        return {
+          start: prev.start - 5,
+          end: prev.end - 5,
+        };
+      });
     }
   };
 
@@ -40,13 +40,13 @@ function Pagination({ totalPages, page, onChangePage }) {
         disabled={page <= 1}
         onClick={() => handlePageChange(page - 1)}
       >
-        {"<"}
+        <i className='bx bx-chevrons-left'></i>
       </button>
 
       {arrButton.slice(range.start, range.end).map((btn) => (
         <button
           key={btn}
-          className={(page == btn) ? "btn-pagi active" : "btn-pagi"}
+          className={page == btn ? "btn-pagi active" : "btn-pagi"}
           onClick={() => handlePageChange(btn)}
         >
           {btn}
@@ -58,7 +58,7 @@ function Pagination({ totalPages, page, onChangePage }) {
         disabled={page == totalPages}
         onClick={() => handlePageChange(page + 1)}
       >
-        {">"}
+        <i className='bx bx-chevrons-right'></i>
       </button>
     </div>
   );

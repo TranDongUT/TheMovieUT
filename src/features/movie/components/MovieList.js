@@ -72,14 +72,14 @@ function MovieList(props) {
     }
   }, [props.filters, page]);
 
-  useEffect(() => {
-    setPage(1);
-  }, [props.category, props.type, search, props.filters])
-
+  
   //pagination
   const handlePageChange = (newPage) => {
     setPage(newPage)
   }
+  useEffect(() => {
+    setPage(1);
+  }, [props.category, props.type, search, props.filters])
 
   return (
     <div>
