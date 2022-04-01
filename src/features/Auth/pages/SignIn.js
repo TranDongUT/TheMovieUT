@@ -4,13 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToFavorite, signIn } from "../actions/user";
 
 ///firebase
-import { config, uiConfig } from "../../../firebase/firebaseConfig";
-import firebase from "firebase/compat/app";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { getFirestore, getDoc, doc } from "firebase/firestore";
-
-const app = firebase.initializeApp(config);
-const db = getFirestore(app);
+import {
+  firebaseApp,
+  firebaseDb,
+  StyleFirebase,
+} from "../../../firebase/firebaseConfig";
+import { getDoc, doc, setDoc } from "firebase/firestore";
 
 /////////////////////////////////////////////
 function SignIn() {
@@ -18,29 +17,29 @@ function SignIn() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unregisterAuthObserver = app
+    const unregisterAuthObserver = firebaseApp
       .auth()
       .onAuthStateChanged(async (user) => {
         ///use Redux
-        dispatch(signIn(user));
-        getFavorite(user.uid);
+        const docRef = doc(firebaseDb, "FavoriteOfUsers", user.uid);
+        const favorite = await getDoc(docRef);
+        ///create favoriteList when first SignIn
+        if (!favorite.data()) {
+          await setDoc(docRef, {});
+        }
+
+        const payload = {
+          userInfor: user,
+          favoriteList: favorite.data(),
+        };
+        dispatch(signIn(payload));
       });
 
     return () => unregisterAuthObserver();
   }, []);
 
-  //About database firebase (favorite of user)
-  ////use id of user to get favorite in FavoriteOfUsers
-  const getFavorite = async (uid) => {
-    const docRef = doc(db, "FavoriteOfUsers", uid);
-    const favorite = await getDoc(docRef);
-    ///use Redux
-    const payload = favorite.data().favorite;
-    dispatch(addToFavorite(payload));
-  };
-
   const handleSignOut = () => {
-    firebase.auth().signOut();
+    firebaseApp.auth().signOut();
     dispatch(signIn(""));
   };
   console.log(user);
@@ -54,7 +53,7 @@ function SignIn() {
           <h1>The Movie UT</h1>
           <p>Please sign-in:</p>
         </div>
-        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={app.auth()} />
+        <StyleFirebase />
       </div>
     );
   }
@@ -66,7 +65,8 @@ function SignIn() {
         <h1>The Movie UT</h1>
       </div>
       <p>
-        Welcome {app.auth().currentUser.displayName}! You are now signed-in!
+        Welcome {firebaseApp.auth().currentUser.displayName}! You are now
+        signed-in!
       </p>
       <button onClick={handleSignOut}>Sign-out</button>
     </div>

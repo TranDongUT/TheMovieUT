@@ -5,14 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import CastList from "./CastList";
 import Video from "./Video";
+//redux
+import { addToFavorite } from "features/Auth/actions/user";
 
 //firebase
-import { config } from "../../../../firebase/firebaseConfig";
-import firebase from "firebase/compat/app";
-import { getFirestore, doc, updateDoc, setDoc } from "firebase/firestore";
-
-const app = firebase.initializeApp(config);
-const db = getFirestore(app);
+import { firebaseDb } from "../../../../firebase/firebaseConfig";
+import { getDoc, doc, setDoc, addDoc, updateDoc } from "firebase/firestore";
 
 //////////////////////////////////////////////////////////////////
 
@@ -57,20 +55,14 @@ function Details() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   console.log(user.favoriteList);
-  const addToFavorite = async (id) => {
-    const docRef = doc(db, "FavoriteOfUsers", user.userInfor.uid);
 
-    if (!user.favoriteList) {
-      /////chua co favorite list -> set moi
-      await setDoc(docRef, { favorite: id });
-      dispatch(addToFavorite(id));
-    } else {
-      ////da co favorite -> update
-      console.log("ok");
-      const newList = { ...user.favoriteList, id };
-      dispatch(addToFavorite(newList));
-      await updateDoc(docRef, { favorite: newList });
-    }
+  const handleFavorite = async (id) => {
+    const docRef = doc(firebaseDb, "FavoriteOfUsers", user.userInfor.uid);
+    ///re-store redux
+    const newList = { ...user.favoriteList, [id]: id };
+    dispatch(addToFavorite(newList));
+    console.log(user.favoriteList);
+    await updateDoc(docRef, newList);
   };
 
   return (
@@ -119,13 +111,24 @@ function Details() {
                     <p>{item.overview}</p>
                   </div>
 
-                  <button
-                    ///handle with Redux
-                    onClick={() => addToFavorite(item.id)}
-                    className="btn btn-addToFavor"
-                  >
-                    Add To Favorite
-                  </button>
+                  {user.favoriteList[item.id] ? (
+                    <button
+                      ///handle with Redux
+                      onClick={() => handleFavorite(item.id)}
+                      className="btn btn-addToFavor"
+                    >
+                      Added
+                    </button>
+                  ) : (
+                    <button
+                      ///handle with Redux
+                      onClick={() => handleFavorite(item.id)}
+                      className="btn btn-addToFavor"
+                    >
+                      Add To Favorite
+                    </button>
+                  )}
+
                   <button
                     onClick={() => setActiveVideo(true)}
                     className="btn btn-trailer"

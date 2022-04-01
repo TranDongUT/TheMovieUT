@@ -1,5 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import { getFirestore, getDoc, doc } from "firebase/firestore";
 
 // Configure Firebase.
 export const config = {
@@ -7,10 +9,22 @@ export const config = {
   authDomain: "the-movie-ut-7c610.firebaseapp.com",
   projectId: "the-movie-ut-7c610",
 };
-
 // Configure FirebaseUI.
 export const uiConfig = {
   signInFlow: "popup",
   signInSuccessUrl: "/sign-in", ///after sigin success
   signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+};
+
+///init Firebase
+export const firebaseApp = firebase.initializeApp(config);
+
+////database
+export const firebaseDb = getFirestore(firebaseApp);
+
+////style login
+export const StyleFirebase = () => {
+  return (
+    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseApp.auth()} />
+  );
 };

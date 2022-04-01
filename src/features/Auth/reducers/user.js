@@ -8,7 +8,8 @@ function userReducer(state = initState, action) {
     case "SIGN_IN":
       return {
         ...state,
-        userInfor: action.payload,
+        userInfor: action.payload.userInfor,
+        favoriteList: action.payload.favoriteList,
       };
     case "ADD_TO_FAVORITE":
       return {
