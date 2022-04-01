@@ -10,7 +10,14 @@ import { addToFavorite } from "features/Auth/actions/user";
 
 //firebase
 import { firebaseDb } from "../../../../firebase/firebaseConfig";
-import { getDoc, doc, setDoc, addDoc, updateDoc } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  deleteField,
+} from "firebase/firestore";
 
 //////////////////////////////////////////////////////////////////
 
@@ -54,15 +61,23 @@ function Details() {
   ///////////about user favorite
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log(user.favoriteList);
 
-  const handleFavorite = async (id) => {
+  const handleAddFavorite = async (id) => {
     const docRef = doc(firebaseDb, "FavoriteOfUsers", user.userInfor.uid);
     ///re-store redux
     const newList = { ...user.favoriteList, [id]: id };
     dispatch(addToFavorite(newList));
-    console.log(user.favoriteList);
     await updateDoc(docRef, newList);
+  };
+
+  const handleRemoveFavor = async (id) => {
+    const docRef = doc(firebaseDb, "FavoriteOfUsers", user.userInfor.uid);
+    await updateDoc(docRef, {
+      [id]: deleteField(),
+    });
+    const newList = user.favoriteList;
+    delete newList[id];
+    dispatch(addToFavorite(newList));
   };
 
   return (
@@ -114,7 +129,7 @@ function Details() {
                   {user.favoriteList[item.id] ? (
                     <button
                       ///handle with Redux
-                      onClick={() => handleFavorite(item.id)}
+                      onClick={() => handleRemoveFavor(item.id)}
                       className="btn btn-addToFavor"
                     >
                       Added
@@ -122,7 +137,7 @@ function Details() {
                   ) : (
                     <button
                       ///handle with Redux
-                      onClick={() => handleFavorite(item.id)}
+                      onClick={() => handleAddFavorite(item.id)}
                       className="btn btn-addToFavor"
                     >
                       Add To Favorite

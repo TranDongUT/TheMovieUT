@@ -27,7 +27,6 @@ function SignIn() {
         if (!favorite.data()) {
           await setDoc(docRef, {});
         }
-
         const payload = {
           userInfor: user,
           favoriteList: favorite.data(),
@@ -42,7 +41,6 @@ function SignIn() {
     firebaseApp.auth().signOut();
     dispatch(signIn(""));
   };
-  console.log(user);
 
   //if not sign-in
   if (!user.userInfor) {
