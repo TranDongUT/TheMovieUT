@@ -62,12 +62,21 @@ function Details() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const handleAddFavorite = async (id) => {
+  const handleAddFavorite = async (id, imdb_id = null) => {
     const docRef = doc(firebaseDb, "FavoriteOfUsers", user.userInfor.uid);
-    ///re-store redux
-    const newList = { ...user.favoriteList, [id]: id };
-    dispatch(addToFavorite(newList));
+    const newObj = {
+      id: id,
+      category: imdb_id ? "movie" : "tv", ///nếu là movie thì có imdb_id, còn tv thì ko có
+    };
+
+    const newList = {
+      ...user.favoriteList,
+      [id]: newObj,
+    };
+
     await updateDoc(docRef, newList);
+    ///re-store redux
+    dispatch(addToFavorite(newList));
   };
 
   const handleRemoveFavor = async (id) => {
@@ -77,6 +86,8 @@ function Details() {
     });
     const newList = user.favoriteList;
     delete newList[id];
+
+    ///re-store redux
     dispatch(addToFavorite(newList));
   };
 
@@ -137,7 +148,7 @@ function Details() {
                   ) : (
                     <button
                       ///handle with Redux
-                      onClick={() => handleAddFavorite(item.id)}
+                      onClick={() => handleAddFavorite(item.id, item.imdb_id)} ////fix here
                       className="btn btn-addToFavor"
                     >
                       Add To Favorite
