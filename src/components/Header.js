@@ -31,8 +31,8 @@ function Header() {
   const inputRef = useRef();
   const [activeSearch, setActiveSearch] = useState(false);
   const [search, setSearch] = useState("");
-  let navigate = useNavigate(); 
-   
+  let navigate = useNavigate();
+
   const active = headerNav.findIndex((e) => e.path === pathname);
 
   useEffect(() => {
@@ -114,12 +114,14 @@ function Header() {
             />
             <i onClick={handleSearch} className="bx bx-search"></i>
           </form>
-          <div className={userInfor ? "avatar-active" : "avatar"}>
+          <div >
             <Link to="/sign-in">
               {userInfor ? (
-                <img src={userInfor._delegate.photoURL} alt="" />
+                <Link to="/user" className="avatar-active text-link">
+                  <img src={userInfor._delegate.photoURL} alt="" />
+                </Link>
               ) : (
-                <i className="bx bx-user-circle"></i>
+                <button className="sign-in">Sign In</button>
               )}
             </Link>
           </div>
