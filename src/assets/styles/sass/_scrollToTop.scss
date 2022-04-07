@@ -11,6 +11,7 @@
     pointer-events: none;
     background: $primary-color;
     transition: all .3s ease;
+    box-shadow: 3px 3px 10px $gray-color;
     i{
       font-size: 22px;
       color: $white-color;
@@ -20,3 +21,11 @@
         pointer-events:visible;
     }
   }
+
+@media screen and (max-width: 767px) {
+  .scrollToTop{
+    bottom: 70px;
+    right: 20px;
+    padding: 5px;
+  }
+}
