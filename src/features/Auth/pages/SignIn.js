@@ -20,17 +20,27 @@ function SignIn() {
     const unregisterAuthObserver = firebaseApp
       .auth()
       .onAuthStateChanged(async (user) => {
-        ///use Redux
+        // const tokenID = await user.getIdToken(); <- when need handle token
+        //when login new user
+        // localStorage.setItem(
+        //   "isLoginFirebase",
+        //   JSON.stringify({ ...user.providerData[0], uid: user.uid })
+        // );
+
         const docRef = doc(firebaseDb, "FavoriteOfUsers", user.uid);
         const favorite = await getDoc(docRef);
-        ///create favoriteList when first SignIn
+        ///create favoriteList when first SignIn if dont have favorite
         if (!favorite.data()) {
           await setDoc(docRef, {});
         }
+        //localStorage.setItem("favoriteList", JSON.stringify(favorite.data()));
+
+        ///use Redux
         const payload = {
-          userInfor: user,
+          userInfor: { ...user.providerData[0], uid: user.uid },
           favoriteList: favorite.data(),
         };
+
         dispatch(signIn(payload));
       });
 

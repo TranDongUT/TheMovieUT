@@ -25,7 +25,7 @@ function User() {
 
   return (
     <>
-      {user && (
+      {firebaseApp.auth().currentUser && (
         <div className="user ">
           <div
             className="infor"
@@ -34,14 +34,16 @@ function User() {
             <div className="container">
               <img
                 className="infor-img"
-                src={user.userInfor._delegate.photoURL}
+                src={firebaseApp.auth().currentUser.photoURL}
                 alt=""
               />
               <div className="infor-name">
                 {firebaseApp.auth().currentUser.displayName}
 
                 <Link to="/">
-                  <button className="sign-out" onClick={handleSignOut}>Sign Out</button>
+                  <button className="sign-out" onClick={handleSignOut}>
+                    Sign Out
+                  </button>
                 </Link>
               </div>
             </div>
@@ -109,6 +111,8 @@ const FavoriteItem = ({ id, category }) => {
     fetchItem();
   }, [user]);
 
+  const link = `/${category}/${id}`;
+
   return (
     <>
       {item.id && (
@@ -116,7 +120,9 @@ const FavoriteItem = ({ id, category }) => {
           <img src={`http://image.tmdb.org/t/p/w500/${item.poster_path}`} />
           <div className="desc">
             <div className="title">
-              <h2>{item.original_title || item.name}</h2>
+              <Link className="text-link" to={link}>
+                <h2>{item.original_title || item.name}</h2>
+              </Link>
               <div>{item.release_date || item.last_air_date}</div>
             </div>
             <p>{item.overview}</p>

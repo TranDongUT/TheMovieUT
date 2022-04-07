@@ -64,6 +64,7 @@ function Details() {
 
   const handleAddFavorite = async (id, imdb_id = null) => {
     const docRef = doc(firebaseDb, "FavoriteOfUsers", user.userInfor.uid);
+    const favorite = await getDoc(docRef);
     const newObj = {
       id: id,
       category: imdb_id ? "movie" : "tv", ///nếu là movie thì có imdb_id, còn tv thì ko có

@@ -114,11 +114,11 @@ function Header() {
             />
             <i onClick={handleSearch} className="bx bx-search"></i>
           </form>
-          <div >
+          <div>
             <Link to="/sign-in">
               {userInfor ? (
                 <Link to="/user" className="avatar-active text-link">
-                  <img src={userInfor._delegate.photoURL} alt="" />
+                  <img src={userInfor.photoURL} alt="" />
                 </Link>
               ) : (
                 <button className="sign-in">Sign In</button>
