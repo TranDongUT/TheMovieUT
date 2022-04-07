@@ -1,0 +1,22 @@
+.scrollToTop{
+    z-index: 9999;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: none;
+    background: $primary-color;
+    transition: all .3s ease;
+    i{
+      font-size: 22px;
+      color: $white-color;
+    }
+    &.active{
+        opacity: 1;
+        pointer-events:visible;
+    }
+  }
