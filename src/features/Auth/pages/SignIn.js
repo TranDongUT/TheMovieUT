@@ -4,48 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToFavorite, signIn } from "../actions/user";
 
 ///firebase
-import {
-  firebaseApp,
-  firebaseDb,
-  StyleFirebase,
-} from "../../../firebase/firebaseConfig";
-import { getDoc, doc, setDoc } from "firebase/firestore";
+import { firebaseApp, StyleFirebase } from "../../../firebase/firebaseConfig";
 
 /////////////////////////////////////////////
 function SignIn() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const unregisterAuthObserver = firebaseApp
-      .auth()
-      .onAuthStateChanged(async (user) => {
-        // const tokenID = await user.getIdToken(); <- when need handle token
-        //when login new user
-        // localStorage.setItem(
-        //   "isLoginFirebase",
-        //   JSON.stringify({ ...user.providerData[0], uid: user.uid })
-        // );
-
-        const docRef = doc(firebaseDb, "FavoriteOfUsers", user.uid);
-        const favorite = await getDoc(docRef);
-        ///create favoriteList when first SignIn if dont have favorite
-        if (!favorite.data()) {
-          await setDoc(docRef, {});
-        }
-        //localStorage.setItem("favoriteList", JSON.stringify(favorite.data()));
-
-        ///use Redux
-        const payload = {
-          userInfor: { ...user.providerData[0], uid: user.uid },
-          favoriteList: favorite.data(),
-        };
-
-        dispatch(signIn(payload));
-      });
-
-    return () => unregisterAuthObserver();
-  }, []);
 
   const handleSignOut = () => {
     firebaseApp.auth().signOut();
