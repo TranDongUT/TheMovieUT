@@ -138,30 +138,29 @@ function Details() {
                     <p>{item.overview}</p>
                   </div>
 
-                  {user.favoriteList[item.id] ? (
+                  <div className="btn-field">
                     <button
-                      ///handle with Redux
-                      onClick={() => handleRemoveFavor(item.id)}
-                      className="btn btn-addToFavor"
+                      ///watch button
+                      onClick={() => setActiveVideo(true)}
+                      className="btn btn-trailer"
                     >
-                      Added
+                      Watch Now
                     </button>
-                  ) : (
-                    <button
-                      ///handle with Redux
-                      onClick={() => handleAddFavorite(item.id, item.imdb_id)} ////fix here
-                      className="btn btn-addToFavor"
-                    >
-                      Add To Favorite
-                    </button>
-                  )}
 
-                  <button
-                    onClick={() => setActiveVideo(true)}
-                    className="btn btn-trailer"
-                  >
-                    Watch Now
-                  </button>
+                    {user.favoriteList[item.id] ? (
+                      <i
+                        className="bx bxs-heart btn-addToFavor added"
+                        ///handle with Redux
+                        onClick={() => handleRemoveFavor(item.id)}
+                      ></i>
+                    ) : (
+                      <i
+                        className="bx bx-heart btn-addToFavor"
+                        ///handle with Redux
+                        onClick={() => handleAddFavorite(item.id, item.imdb_id)} ////fix here
+                      ></i>
+                    )}
+                  </div>
 
                   <div className="detail-cast">
                     <h3>Casts</h3>

@@ -12,8 +12,11 @@ export const config = {
 // Configure FirebaseUI.
 export const uiConfig = {
   signInFlow: "popup",
-  signInSuccessUrl: "/sign-in", ///after sigin success
-  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+  signInSuccessUrl: "/", ///after sigin success
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+  ],
 };
 
 ///init Firebase
