@@ -2,7 +2,7 @@ import tmdbApi from "api/tmdbApi";
 import MovieSlide from "features/movie/components/MovieSlide";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import CastList from "./CastList";
 import Video from "./Video";
 //redux
@@ -26,6 +26,7 @@ function Details() {
   const [item, setItem] = useState({});
   const videoRef = useRef(null);
   const [activeVideo, setActiveVideo] = useState(false);
+  const navigate = useNavigate();
 
   const fetchItem = async () => {
     const params = {};
@@ -63,21 +64,22 @@ function Details() {
   const dispatch = useDispatch();
 
   const handleAddFavorite = async (id, imdb_id = null) => {
-    const docRef = doc(firebaseDb, "FavoriteOfUsers", user.userInfor.uid);
-    const favorite = await getDoc(docRef);
-    const newObj = {
-      id: id,
-      category: imdb_id ? "movie" : "tv", ///nếu là movie thì có imdb_id, còn tv thì ko có
-    };
+    if (user.userInfor) {
+      const docRef = doc(firebaseDb, "FavoriteOfUsers", user.userInfor.uid);
+      // const favorite = await getDoc(docRef);
+      const newObj = {
+        id: id,
+        category: imdb_id ? "movie" : "tv", ///nếu là movie thì có imdb_id, còn tv thì ko có
+      };
 
-    const newList = {
-      ...user.favoriteList,
-      [id]: newObj,
-    };
-
-    await updateDoc(docRef, newList);
-    ///re-store redux
-    dispatch(addToFavorite(newList));
+      const newList = {
+        ...user.favoriteList,
+        [id]: newObj,
+      };
+      await updateDoc(docRef, newList);
+      ///re-store redux
+      dispatch(addToFavorite(newList));
+    }
   };
 
   const handleRemoveFavor = async (id) => {
@@ -146,20 +148,30 @@ function Details() {
                     >
                       Watch Now
                     </button>
-
-                    {user.favoriteList[item.id] ? (
-                      <i
-                        className="bx bxs-heart btn-addToFavor added"
-                        ///handle with Redux
-                        onClick={() => handleRemoveFavor(item.id)}
-                      ></i>
-                    ) : (
-                      <i
-                        className="bx bx-heart btn-addToFavor"
-                        ///handle with Redux
-                        onClick={() => handleAddFavorite(item.id, item.imdb_id)} ////fix here
-                      ></i>
-                    )}
+                    {
+                      ///handle add/remove favorite
+                      user.userInfor ? (
+                        <i
+                          className={`${
+                            user.favoriteList[item.id]
+                              ? "bx bxs-heart added"
+                              : "bx bx-heart"
+                          }  btn-addToFavor `}
+                          ///handle with Redux
+                          onClick={() =>
+                            user.favoriteList[item.id]
+                              ? handleRemoveFavor(item.id)
+                              : handleAddFavorite(item.id, item.imdb_id)
+                          }
+                        ></i>
+                      ) : (
+                        <i
+                          className="bx bx-heart btn-addToFavor"
+                          ///direct to login page
+                          onClick={() => navigate("/sign-in")}
+                        ></i>
+                      )
+                    }
                   </div>
 
                   <div className="detail-cast">
