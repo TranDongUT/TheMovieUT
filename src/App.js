@@ -28,11 +28,11 @@ function App() {
           if (!favorite.data()) {
             await setDoc(docRef, {});
           }
-          //localStorage.setItem("favoriteList", JSON.stringify(favorite.data()));
 
           ///use Redux
+          const { displayName, email, photoURL, uid } = user;
           const payload = {
-            userInfor: { ...user.providerData[0], uid: user.uid },
+            userInfor: { displayName, email, photoURL, uid },
             favoriteList: favorite.data(),
           };
 
@@ -40,7 +40,10 @@ function App() {
         }
       });
 
-    return () => unregisterAuthObserver();
+    ///cleanup func
+    return () => {
+      unregisterAuthObserver();
+    };
   }, []);
 
   return (

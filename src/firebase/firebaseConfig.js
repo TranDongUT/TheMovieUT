@@ -1,7 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { getFirestore, getDoc, doc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 // Configure Firebase.
 export const config = {
