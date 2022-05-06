@@ -1,5 +1,5 @@
-import { category, movieType, tvType } from "api/tmdbApi";
-import HeroSlide from "components/HeroSlide";
+import { category, movieType, tvType } from "../../../api/tmdbApi";
+import HeroSlide from "../../../components/HeroSlide";
 import React from "react";
 import MovieSlide from "../components/MovieSlide";
 

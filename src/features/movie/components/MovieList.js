@@ -1,4 +1,4 @@
-import tmdbApi, { category, movieType, tvType } from "api/tmdbApi";
+import tmdbApi, { category, movieType, tvType } from "../../../api/tmdbApi";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MovieCard from "./MovieCard";

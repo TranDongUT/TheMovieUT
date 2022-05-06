@@ -1,5 +1,5 @@
-import tmdbApi, { category } from "api/tmdbApi";
-import { addToFavorite, signIn } from "features/Auth/actions/user";
+import tmdbApi, { category } from "../../../api/tmdbApi";
+import { addToFavorite, signIn } from "../../Auth/actions/user";
 import { deleteField, doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

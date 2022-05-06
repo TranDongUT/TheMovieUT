@@ -1,4 +1,4 @@
-import tmdbApi, { movieType } from "api/tmdbApi";
+import tmdbApi, { movieType } from "../api/tmdbApi";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SwiperCore, { Autoplay } from "swiper";

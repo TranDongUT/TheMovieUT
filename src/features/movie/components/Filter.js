@@ -1,4 +1,4 @@
-import tmdbApi from "api/tmdbApi";
+import tmdbApi from "../../../api/tmdbApi";
 import React, { useEffect, useState } from "react";
 
 function Filter(props) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import tmdbApi, { category } from "api/tmdbApi";
+import tmdbApi, { category } from "../../../api/tmdbApi";
 import { Link } from "react-router-dom";
 import MovieCard from "./MovieCard";
 

@@ -1,12 +1,12 @@
-import tmdbApi from "api/tmdbApi";
-import MovieSlide from "features/movie/components/MovieSlide";
+import tmdbApi from "../../../../api/tmdbApi";
+import MovieSlide from "../../components/MovieSlide";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import CastList from "./CastList";
 import Video from "./Video";
 //redux
-import { addToFavorite } from "features/Auth/actions/user";
+import { addToFavorite } from "../../../../features/Auth/actions/user";
 
 //firebase
 import { firebaseDb } from "../../../../firebase/firebaseConfig";

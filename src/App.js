@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import MRoutes from "config/MRoutes";
-import Footer from "components/Footer";
+import MRoutes from "./config/MRoutes";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
-import ScrollToTop from "components/ScrollToTop";
+import ScrollToTop from "./components/ScrollToTop";
 /////redux
 import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "features/Auth/actions/user";
+import { signIn } from "./features/Auth/actions/user";
 /////firebase
 import "firebase/compat/auth";
 import { firebaseApp, firebaseDb } from "./firebase/firebaseConfig";
