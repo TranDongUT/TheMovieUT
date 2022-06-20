@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MovieCard from "./MovieCard";
 import Pagination from "./Pagination";
+import noImage from "../../../assets/images/no-image.png";
 
 function MovieList(props) {
   ////{category, filter, type} = props <- from Catalog
@@ -43,7 +44,9 @@ function MovieList(props) {
       }
     }
 
+    // background
     setBg(respone.results[0].backdrop_path);
+    // result
     setItems(respone.results);
     setTotalPages(respone.total_pages);
   };
@@ -75,17 +78,26 @@ function MovieList(props) {
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
+  // reset page
   useEffect(() => {
     setPage(1);
   }, [props.category, props.type, search, props.filters]);
 
   return (
     <div>
-      {bg && (
+      {bg ? (
         <div
           className="header-bg background"
           style={{
             backgroundImage: `url("http://image.tmdb.org/t/p/original/${bg}")`,
+            width: "100vw",
+          }}
+        ></div>
+      ) : (
+        <div
+          className="header-bg background"
+          style={{
+            backgroundImage: `url(${noImage})`,
             width: "100vw",
           }}
         ></div>
