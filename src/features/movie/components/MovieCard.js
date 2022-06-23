@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 function MovieCard(props) {
-  const IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
+  const IMAGE_PATH = "https://image.tmdb.org/t/p/w500";
   const link = `/${props.category}/${props.item.id}`;
 
   return (

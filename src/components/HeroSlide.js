@@ -49,7 +49,7 @@ function HeroSlideItem({ item }) {
     <div
       className="slide-item"
       style={{
-        backgroundImage: `url("http://image.tmdb.org/t/p/original/${item.backdrop_path}")`,
+        backgroundImage: `url("https://image.tmdb.org/t/p/original/${item.backdrop_path}")`,
       }}
     >
       <div className="container item-details">

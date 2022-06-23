@@ -89,7 +89,7 @@ function MovieList(props) {
         <div
           className="header-bg background"
           style={{
-            backgroundImage: `url("http://image.tmdb.org/t/p/original/${bg}")`,
+            backgroundImage: `url("https://image.tmdb.org/t/p/original/${bg}")`,
             width: "100vw",
           }}
         ></div>

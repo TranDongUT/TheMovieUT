@@ -101,14 +101,14 @@ function Details() {
           <div
             className="detail background"
             style={{
-              backgroundImage: `url("http://image.tmdb.org/t/p/w500/${item.backdrop_path}")`,
+              backgroundImage: `url("https://image.tmdb.org/t/p/w500/${item.backdrop_path}")`,
             }}
           >
             <div className="container">
               <div className="detail-info">
                 <div className="detail-image">
                   <img
-                    src={`http://image.tmdb.org/t/p/w500/${item.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
                   />
                 </div>
                 <div className="detail-desc">

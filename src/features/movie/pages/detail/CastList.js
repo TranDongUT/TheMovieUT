@@ -22,7 +22,7 @@ function CastList({ id }) {
           {item.profile_path ? (
             <img
               className="casts-item-image"
-              src={`http://image.tmdb.org/t/p/w500/${item.profile_path}`}
+              src={`https://image.tmdb.org/t/p/w500/${item.profile_path}`}
             />
           ) : null}
           <div className="casts-item-name">{item.name}</div>

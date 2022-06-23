@@ -117,7 +117,7 @@ const FavoriteItem = ({ id, category }) => {
     <>
       {item.id && (
         <div className="favor-item">
-          <img src={`http://image.tmdb.org/t/p/w500/${item.poster_path}`} />
+          <img src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`} />
           <div className="desc">
             <div className="title">
               <Link className="text-link" to={link}>
