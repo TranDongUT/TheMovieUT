@@ -21,6 +21,7 @@ function User() {
   const handleSignOut = () => {
     firebaseApp.auth().signOut();
     dispatch(signIn(""));
+    localStorage.removeItem("isLoginFirebase");
   };
 
   return (

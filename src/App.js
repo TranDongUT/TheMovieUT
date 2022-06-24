@@ -37,6 +37,10 @@ function App() {
           };
 
           dispatch(signIn(payload));
+
+          const token = await user.getIdToken();
+          // console.log("Token: ", token);
+          localStorage.setItem("isLoginFirebase", token);
         }
       });
 

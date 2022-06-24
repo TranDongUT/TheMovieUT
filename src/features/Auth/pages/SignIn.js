@@ -14,6 +14,7 @@ function SignIn() {
   const handleSignOut = () => {
     firebaseApp.auth().signOut();
     dispatch(signIn(""));
+    localStorage.removeItem("isLoginFirebase");
   };
 
   // if (!user.userInfor) {
