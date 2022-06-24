@@ -5,9 +5,9 @@ import { getFirestore } from "firebase/firestore";
 
 // Configure Firebase.
 export const config = {
-  apiKey: "AIzaSyCpIxJHtG0E5vxR-DNWrcTntNIUp_cd_SY",
-  authDomain: "the-movie-ut-7c610.firebaseapp.com",
-  projectId: "the-movie-ut-7c610",
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
 };
 // Configure FirebaseUI.
 export const uiConfig = {
